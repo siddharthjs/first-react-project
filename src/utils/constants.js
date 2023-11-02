@@ -1,0 +1,2 @@
+export const LOGO_URL = "https://png.pngtree.com/templates/20180809/restaurant-logos-png-png_25706.jpg"
+export const RESTUARANT_IMG = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Haldiram_SouthIndian.JPG/218px-Haldiram_SouthIndian.JPG"
