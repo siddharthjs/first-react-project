@@ -1,5 +1,4 @@
 import RestaurantCard from "./RestaurantCard"
-import resObj from "../utils/mockData"
 import { useState, useEffect } from "react"
 import Shimmer from "./Shimmer"
 
@@ -7,6 +6,7 @@ import Shimmer from "./Shimmer"
 const Body = () => {
 	// Local State Variable - Super Powerful
 let [listOfRestuarants, setListOfRestaurants] = useState([])
+let [filteredRestaurants, setFilteredRestaurants] = useState([])
 let [searchText, setSearchText] = useState("")
 
 
@@ -21,6 +21,7 @@ const fetchData = async () => {
 	const json = await data.json()
 	console.log(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
 	setListOfRestaurants(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
+	setFilteredRestaurants(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
 
 }
 
@@ -41,10 +42,19 @@ if(listOfRestuarants?.length === 0){
 		<div className="body">
 
 		<div className="search">
-		<input type="text" placeholder="Search a product....."></input>
+		<input type="text" placeholder="Search a product....." value = {searchText} onChange={(e) => {
+			setSearchText(e.target.value)
+		}}></input>
 		<button onClick={() => {
 			// Filter the restaurant data
+			console.log("Search button clciked!")
 			console.log(searchText)
+
+			const filteredRestaurant = listOfRestuarants.filter((restaurant) => {
+				return restaurant.info.name.toLowerCase().includes(searchText.toLowerCase())
+			})
+			setFilteredRestaurants(filteredRestaurant)
+			console.log("The filtered restaurants are: ", filteredRestaurant)
 		}}>Search</button>
 		</div>
 		<div className="filter">
@@ -58,7 +68,7 @@ if(listOfRestuarants?.length === 0){
 		</button>
 		</div>
 			<div className="res-container">
-			{listOfRestuarants?.map((restaurant) => {
+			{filteredRestaurants?.map((restaurant) => {
 				return <RestaurantCard key={restaurant.info.id} resName={restaurant.info.name} resRating={restaurant.info.avgRating}/>
 			})}
 			</div>
