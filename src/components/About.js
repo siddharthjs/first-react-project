@@ -20,9 +20,7 @@ class About extends Component{
 				<h1>About</h1>
 				<h2>Team Members</h2>
 				
-				<UserClass name="Child 1" location="New Delhi"/>
-
-				<UserClass name="Child 2" location="US"/>
+				<UserClass githubUserName="siddharthjs"/>
 			</div>
 		)
 	}

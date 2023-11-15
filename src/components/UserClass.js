@@ -6,32 +6,59 @@ class UserClass extends React.Component{
 		console.log(props)
 
 		this.state = {
-			count: 0,
-			count2: 2
+			userInfo : {
+				name: "Dummy",
+				location: "Dummy"
+			}
 		}
 
 		console.log(this.props.name + " Child Constructor")
 	}
 
-	componentDidMount(){
-		console.log(this.props.name + ' Child component did Mount')
+	async componentDidMount(){
+		// console.log(this.props.name + ' Child component did Mount')
+		
+		const data = await fetch(`https://api.github.com/users/${this.props.githubUserName}`)
+
+		const json = await data.json()
+		console.log(json)
+
+		this.setState({
+			userInfo: json
+		})
+	}
+
+	componentDidUpdate(){
+		console.log("Component is updated!")
+	}
+
+	componentWillUnmount(){
+		console.log("Component is unmounted!")
 	}
 
 	render(){
+		
 		console.log(this.props.name + " Child Render")
 		return (
 			<div className="user-card">
-			<h1>Count = {this.state.count}</h1>
-			<button onClick={() => {
-				// this.state.count = this.state.count + 1
-				this.setState({count:this.state.count + 1})
-			}}>Click!</button>
-			<h2>Name: {this.props.name}</h2>
-			<h3>Location: {this.props.location}</h3>
-			<h4>Contact: @hebaq</h4>
+			<img src={this.state.userInfo.avatar_url}></img>
+			<h2>Name: {this.state.userInfo.name}</h2>
+			
+			<h4>Github Username: {this.state.userInfo.login}</h4>
 			</div>
 		)
 	}
 }
 
 export default UserClass
+
+/**
+ * Constructor (dummy)
+ * Render (dummy)
+ * <HTML Dummy></HTML>
+ * 
+ * componentDidMount
+ * <API Call>
+ * <this.setState>
+ * 
+ */
