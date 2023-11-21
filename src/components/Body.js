@@ -1,4 +1,4 @@
-import RestaurantCard from "./RestaurantCard"
+import RestaurantCard, {withPromotedLabel} from "./RestaurantCard"
 import { useState, useEffect } from "react"
 import Shimmer from "./Shimmer"
 import {Link} from 'react-router-dom'
@@ -39,6 +39,8 @@ if(listOfRestuarants?.length === 0){
 // let listOfRestuarants = resObj.data
 // listOfRestuarants = []
 
+	const RestaurantCardPromoted = withPromotedLabel(RestaurantCard)
+
 	return (
 		<div className="body">
 
@@ -70,7 +72,13 @@ if(listOfRestuarants?.length === 0){
 		</div>
 			<div className="res-container">
 			{filteredRestaurants?.map((restaurant) => {
-				return <Link key={restaurant.info.id} to={"/restaurant/" + restaurant.info.id}><RestaurantCard  resName={restaurant.info.name} resRating={restaurant.info.avgRating}/></Link>
+				return <Link key={restaurant.info.id} to={"/restaurant/" + restaurant.info.id}>
+				{console.log("Restaurant: ", restaurant)}
+				{
+					restaurant.data?.promoted ? (<RestaurantCardPromoted resName={restaurant.info.name} resRating={restaurant.info.avgRating} />) : (<RestaurantCard  resName={restaurant.info.name} resRating={restaurant.info.avgRating}/>)
+				}
+				
+				</Link>
 			})}
 			</div>
 		</div>
