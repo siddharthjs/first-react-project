@@ -1,12 +1,20 @@
 import { RESTUARANT_IMG } from "../utils/constants"
+import {useContext} from 'react'
+import UserContext from "../utils/UserContext"
+
+
 
 const RestaurantCard = (props) => {
 	
+	const data = useContext(UserContext)
+	console.log(data.loggedInUser)
+
 	return (
 		<div className="res-card">
 			<img alt="res-image" src={RESTUARANT_IMG}/>
 			<h3>{props.resName}</h3>
 			<h4>{props.resRating}</h4>
+			<h4>{data.loggedInUser}</h4>
 		</div>
 	)
 }

@@ -1,8 +1,11 @@
 import {LOGO_URL} from "../utils/constants"
-import { useState } from "react"
+import { useState, useContext } from "react"
 import {Link} from 'react-router-dom'
+import UserContext from "../utils/UserContext"
 
 const Header = () => {
+	const data = useContext(UserContext)
+	console.log("User data: ", data)
 	let [btnName, setBtnName] = useState("Login")
 
 	console.log("Header rendered!!")
@@ -19,6 +22,7 @@ const Header = () => {
 					<li className="px-4"><Link to="/about">About Us</Link></li>
 					<li className="px-4"><Link to="/contact">Contact Us</Link></li>
 					<li>Cart</li>
+					<li className="px-4">{data.loggedInUser}</li>
 				</ul>
 				<button className="login" onClick={() => {
 					btnName === "Login" ? setBtnName("Logout") : setBtnName("Login")
