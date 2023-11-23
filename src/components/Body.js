@@ -1,7 +1,8 @@
 import RestaurantCard, {withPromotedLabel} from "./RestaurantCard"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import Shimmer from "./Shimmer"
 import {Link} from 'react-router-dom'
+import UserContext from "../utils/UserContext"
 
 
 const Body = () => {
@@ -9,6 +10,8 @@ const Body = () => {
 let [listOfRestuarants, setListOfRestaurants] = useState([])
 let [filteredRestaurants, setFilteredRestaurants] = useState([])
 let [searchText, setSearchText] = useState("")
+
+let {loggedInUser, setUserName} = useContext(UserContext)
 
 
 useEffect(() => {
@@ -20,7 +23,7 @@ const fetchData = async () => {
 	const data = await fetch('https://www.swiggy.com/dapi/restaurants/list/v5?lat=26.9124336&lng=75.7872709&page_type=DESKTOP_WEB_LISTING')
 
 	const json = await data.json()
-	console.log(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
+	console.log("Fetched data: ", json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
 	setListOfRestaurants(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
 	setFilteredRestaurants(json?.data?.cards[5]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
 
@@ -69,8 +72,13 @@ if(listOfRestuarants?.length === 0){
 		}}>
 		Top Restaurants
 		</button>
+
+		<br/>
+		<input type="text" placeholder="Username" value={loggedInUser} onChange={(e) => {setUserName(e.target.value)}}/>
+
 		</div>
 			<div className="res-container">
+			{console.log("Filtered Restaurants: ", filteredRestaurants)}
 			{filteredRestaurants?.map((restaurant) => {
 				return <Link key={restaurant.info.id} to={"/restaurant/" + restaurant.info.id}>
 				{console.log("Restaurant: ", restaurant)}

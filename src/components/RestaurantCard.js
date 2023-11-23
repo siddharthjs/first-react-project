@@ -5,7 +5,7 @@ import UserContext from "../utils/UserContext"
 
 
 const RestaurantCard = (props) => {
-	
+	console.log("Hello")
 	const data = useContext(UserContext)
 	console.log(data.loggedInUser)
 
